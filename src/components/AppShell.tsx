@@ -104,6 +104,8 @@ export default function AppShell() {
           })}
         </div>
       </nav>
+
+      <InstallBanner />
     </div>
   );
 }
