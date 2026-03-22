@@ -276,7 +276,7 @@ export default function Index() {
             Ready to Create Content That Converts?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-muted-foreground text-sm md:text-base">
-            Join thousands of creators using CreatorScript AI to produce engaging content faster than ever.
+            Join thousands of creators using Creatron to produce engaging content faster than ever.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <button
