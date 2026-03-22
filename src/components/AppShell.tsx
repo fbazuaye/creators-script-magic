@@ -5,6 +5,7 @@ import creatronLogo from "@/assets/creatron-logo.svg";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import InstallBanner from "@/components/InstallBanner";
+import Footer from "@/components/Footer";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { CreditBalance } from "@/components/CreditBalance";
 import { useAdmin } from "@/hooks/useAdmin";
@@ -102,6 +103,7 @@ export default function AppShell() {
       {/* Content */}
       <main className="flex-1 overflow-y-auto px-4 py-4 pb-24">
         <Outlet />
+        <Footer />
       </main>
 
       {/* Bottom Navigation */}

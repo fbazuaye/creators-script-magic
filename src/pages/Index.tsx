@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import creatronLogo from "@/assets/creatron-logo.svg";
+import Footer from "@/components/Footer";
 
 const platforms = [
   { icon: Youtube, label: "YouTube" },
@@ -297,10 +298,7 @@ export default function Index() {
       </section>
 
       {/* ─── Footer ─── */}
-      <footer className="border-t py-8 text-center text-xs text-muted-foreground space-y-1">
-        <p>© {new Date().getFullYear()} Creatron. All rights reserved.</p>
-        <p>Designed by Frank Bazuaye · Powered By LiveGig Ltd</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

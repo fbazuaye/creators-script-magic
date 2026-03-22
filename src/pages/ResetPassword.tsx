@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Lock, Loader2, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Footer from "@/components/Footer";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -38,17 +39,18 @@ export default function ResetPassword() {
 
   if (done) {
     return (
-      <div className="flex min-h-[100dvh] items-center justify-center bg-background px-5">
+      <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-5">
         <div className="flex flex-col items-center gap-3 animate-fade-up">
           <CheckCircle className="h-12 w-12 text-primary" />
           <p className="text-sm font-medium text-foreground">Password updated! Redirecting…</p>
         </div>
+        <div className="mt-auto w-full"><Footer /></div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-[100dvh] items-center justify-center bg-background px-5">
+    <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-5">
       <form onSubmit={handleReset} className="w-full max-w-sm space-y-5 animate-fade-up">
         <h2 className="text-xl font-semibold tracking-tight text-foreground text-center">
           Set New Password
@@ -74,6 +76,7 @@ export default function ResetPassword() {
           Update Password
         </button>
       </form>
+      <div className="mt-auto w-full"><Footer /></div>
     </div>
   );
 }
