@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
-  Sparkles,
+  FileText,
   FileText,
   Image,
   Zap,
