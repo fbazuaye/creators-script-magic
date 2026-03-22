@@ -90,7 +90,6 @@ export default function Index() {
           <div className="flex items-center gap-2">
             <img src={creatronLogo} alt="Creatron" className="h-8" />
           </div>
-          </div>
           <nav className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
             <button onClick={() => navigate("/create")} className="transition-colors hover:text-foreground">
               Create
