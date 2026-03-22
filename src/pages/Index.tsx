@@ -16,6 +16,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import creatronLogo from "@/assets/creatron-logo.svg";
 
 const platforms = [
   { icon: Youtube, label: "YouTube" },
