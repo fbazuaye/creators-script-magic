@@ -3,7 +3,7 @@ import { Sparkles, Copy, Check, ChevronDown, Square, Save } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-const PLATFORMS = ["YouTube", "TikTok", "Instagram Reels", "Podcast", "Blog"];
+const PLATFORMS = ["YouTube", "TikTok", "Instagram Reels", "Facebook", "Podcast", "Blog"];
 const TONES = ["Casual", "Professional", "Funny", "Educational", "Dramatic"];
 
 export default function ScriptGenerator() {

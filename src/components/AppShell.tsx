@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { FileText, Image, FolderOpen, Sparkles, User, LogOut, Coins } from "lucide-react";
+import { FileText, Image, FolderOpen, Sparkles, User, LogOut, Coins, Shield } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import InstallBanner from "@/components/InstallBanner";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { CreditBalance } from "@/components/CreditBalance";
+import { useAdmin } from "@/hooks/useAdmin";
 import type { User as SupaUser } from "@supabase/supabase-js";
 
 const tabs = [
@@ -19,6 +20,7 @@ export default function AppShell() {
   const navigate = useNavigate();
   const [user, setUser] = useState<SupaUser | null>(null);
   const [showMenu, setShowMenu] = useState(false);
+  const { isAdmin } = useAdmin();
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
@@ -68,6 +70,15 @@ export default function AppShell() {
                 <div className="fixed inset-0 z-40" onClick={() => setShowMenu(false)} />
                 <div className="absolute right-0 top-full z-50 mt-1 w-48 rounded-xl border bg-card p-1 shadow-lg animate-fade-up">
                   <p className="px-3 py-2 text-xs text-muted-foreground truncate">{user.email}</p>
+                  {isAdmin && (
+                    <button
+                      onClick={() => { navigate("/admin"); setShowMenu(false); }}
+                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-muted active:scale-[0.97]"
+                    >
+                      <Shield className="h-4 w-4" />
+                      Admin Dashboard
+                    </button>
+                  )}
                   <button
                     onClick={handleSignOut}
                     className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-destructive transition-colors hover:bg-destructive/10 active:scale-[0.97]"
