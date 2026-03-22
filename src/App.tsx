@@ -11,6 +11,7 @@ import Projects from "@/pages/Projects";
 import BuyCredits from "@/pages/BuyCredits";
 import Auth from "@/pages/Auth";
 import ResetPassword from "@/pages/ResetPassword";
+import AdminDashboard from "@/pages/AdminDashboard";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
