@@ -12,6 +12,7 @@ import {
   Youtube,
   Instagram,
   Linkedin,
+  Facebook,
   CheckCircle2,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
