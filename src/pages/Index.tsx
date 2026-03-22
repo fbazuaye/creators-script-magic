@@ -87,10 +87,8 @@ export default function Index() {
       <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-primary" />
-            <span className="text-base font-semibold tracking-tight">
-              CreatorScript <span className="font-normal text-muted-foreground">AI</span>
-            </span>
+            <img src={creatronLogo} alt="Creatron" className="h-8" />
+          </div>
           </div>
           <nav className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
             <button onClick={() => navigate("/create")} className="transition-colors hover:text-foreground">
