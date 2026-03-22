@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Sparkles, Copy, Check, ChevronDown, Square } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Sparkles, Copy, Check, ChevronDown, Square, Save } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -14,13 +14,22 @@ export default function ScriptGenerator() {
   const [script, setScript] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUserId(data.user?.id ?? null));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
+      setUserId(session?.user?.id ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleGenerate = async () => {
     if (!topic.trim()) return;
     setLoading(true);
     setScript("");
-
     abortRef.current = new AbortController();
 
     try {
@@ -43,7 +52,6 @@ export default function ScriptGenerator() {
       }
 
       if (!resp.body) throw new Error("No response body");
-
       const reader = resp.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
@@ -53,7 +61,6 @@ export default function ScriptGenerator() {
         const { done, value } = await reader.read();
         if (done) break;
         buffer += decoder.decode(value, { stream: true });
-
         let newlineIdx: number;
         while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
           let line = buffer.slice(0, newlineIdx);
@@ -95,6 +102,29 @@ export default function ScriptGenerator() {
     navigator.clipboard.writeText(script);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleSave = async () => {
+    if (!script || !userId) {
+      toast.error(userId ? "No script to save" : "Sign in to save scripts");
+      return;
+    }
+    setSaving(true);
+    const { error } = await supabase.from("scripts").insert({
+      user_id: userId,
+      topic,
+      platform,
+      tone,
+      duration,
+      content: script,
+    });
+    setSaving(false);
+    if (error) {
+      toast.error("Failed to save script");
+      console.error(error);
+    } else {
+      toast.success("Script saved!");
+    }
   };
 
   return (
@@ -159,19 +189,37 @@ export default function ScriptGenerator() {
         <div className="animate-fade-up space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium">Your Script</span>
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-1.5 text-xs font-medium text-secondary-foreground transition-all active:scale-95"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? "Copied!" : "Copy"}
-            </button>
+            <div className="flex items-center gap-2">
+              {userId && (
+                <button
+                  onClick={handleSave}
+                  disabled={saving || loading}
+                  className="flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition-all active:scale-95 disabled:opacity-50"
+                >
+                  <Save className="h-3.5 w-3.5" />
+                  {saving ? "Saving…" : "Save"}
+                </button>
+              )}
+              <button
+                onClick={handleCopy}
+                className="flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-1.5 text-xs font-medium text-secondary-foreground transition-all active:scale-95"
+              >
+                {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                {copied ? "Copied!" : "Copy"}
+              </button>
+            </div>
           </div>
           <div className="whitespace-pre-wrap rounded-xl border bg-card p-4 text-sm leading-relaxed text-card-foreground shadow-sm">
             {script}
             {loading && <span className="inline-block w-1.5 h-4 ml-0.5 bg-primary animate-pulse rounded-sm" />}
           </div>
         </div>
+      )}
+
+      {!userId && script && (
+        <p className="text-center text-xs text-muted-foreground">
+          Sign in to save scripts to your projects.
+        </p>
       )}
     </div>
   );
