@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { FileText, Image, FolderOpen, Sparkles, User, LogOut, Coins, Shield } from "lucide-react";
+import { FileText, Image, FolderOpen, User, LogOut, Coins, Shield } from "lucide-react";
+import creatronLogo from "@/assets/creatron-logo.svg";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import InstallBanner from "@/components/InstallBanner";
