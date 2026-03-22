@@ -21,7 +21,14 @@ const platforms = [
   { icon: Youtube, label: "YouTube" },
   { icon: () => <span className="text-sm font-bold">T</span>, label: "TikTok" },
   { icon: Instagram, label: "Instagram" },
+  { icon: Facebook, label: "Facebook" },
   { icon: Linkedin, label: "LinkedIn" },
+];
+
+const pricingPacks = [
+  { credits: 10, price: "$0.70", perCredit: "$0.07", popular: false },
+  { credits: 50, price: "$3.50", perCredit: "$0.07", popular: true },
+  { credits: 100, price: "$7.00", perCredit: "$0.07", popular: false },
 ];
 
 const stats = [
