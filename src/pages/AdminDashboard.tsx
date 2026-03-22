@@ -14,6 +14,8 @@ interface UserRow {
   email?: string;
 }
 
+type CreditInput = { userId: string; amount: string } | null;
+
 interface Transaction {
   id: string;
   user_id: string;
@@ -43,6 +45,7 @@ export default function AdminDashboard() {
   const [scripts, setScripts] = useState<Script[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
+  const [creditInput, setCreditInput] = useState<CreditInput>(null);
 
   useEffect(() => {
     if (adminLoading) return;
@@ -182,20 +185,47 @@ export default function AdminDashboard() {
                         <td className="px-4 py-3 font-mono text-xs">{u.user_id.slice(0, 12)}…</td>
                         <td className="px-4 py-3 text-right font-medium" style={{ fontVariantNumeric: "tabular-nums" }}>{u.credits}</td>
                         <td className="px-4 py-3 text-right">
-                          <div className="flex items-center justify-end gap-1">
+                          {creditInput?.userId === u.user_id ? (
+                            <form
+                              className="flex items-center justify-end gap-1.5"
+                              onSubmit={(e) => {
+                                e.preventDefault();
+                                const amt = parseInt(creditInput.amount, 10);
+                                if (!amt || isNaN(amt)) { toast.error("Enter a valid number"); return; }
+                                adjustCredits(u.user_id, amt);
+                                setCreditInput(null);
+                              }}
+                            >
+                              <Input
+                                type="number"
+                                placeholder="e.g. 50"
+                                value={creditInput.amount}
+                                onChange={(e) => setCreditInput({ userId: u.user_id, amount: e.target.value })}
+                                className="w-24 h-8 text-xs"
+                                autoFocus
+                              />
+                              <button
+                                type="submit"
+                                className="inline-flex items-center rounded-lg bg-primary px-2.5 py-1.5 text-xs font-medium text-primary-foreground hover:bg-primary/90 transition-colors active:scale-95"
+                              >
+                                Add
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setCreditInput(null)}
+                                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                              >
+                                Cancel
+                              </button>
+                            </form>
+                          ) : (
                             <button
-                              onClick={() => adjustCredits(u.user_id, 10)}
+                              onClick={() => setCreditInput({ userId: u.user_id, amount: "" })}
                               className="inline-flex items-center gap-1 rounded-lg bg-primary/10 px-2.5 py-1.5 text-xs font-medium text-primary hover:bg-primary/20 transition-colors active:scale-95"
                             >
-                              <Plus className="h-3 w-3" /> 10
+                              <Plus className="h-3 w-3" /> Add Credits
                             </button>
-                            <button
-                              onClick={() => adjustCredits(u.user_id, -10)}
-                              className="inline-flex items-center gap-1 rounded-lg bg-destructive/10 px-2.5 py-1.5 text-xs font-medium text-destructive hover:bg-destructive/20 transition-colors active:scale-95"
-                            >
-                              <Minus className="h-3 w-3" /> 10
-                            </button>
-                          </div>
+                          )}
                         </td>
                       </tr>
                     ))}
