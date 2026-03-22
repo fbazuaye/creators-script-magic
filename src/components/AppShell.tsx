@@ -37,6 +37,7 @@ export default function AppShell() {
 
   return (
     <div className="flex min-h-[100dvh] flex-col bg-background">
+      <PaymentTestModeBanner />
       {/* Header */}
       <header className="sticky top-0 z-30 flex items-center justify-between border-b bg-background/80 px-4 py-3 backdrop-blur-md">
         <div className="flex items-center gap-2">
