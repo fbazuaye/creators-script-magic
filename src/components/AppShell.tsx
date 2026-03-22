@@ -48,7 +48,14 @@ export default function AppShell() {
         </div>
 
         {user ? (
-          <div className="relative">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate("/buy-credits")}
+              className="transition-all active:scale-95"
+            >
+              <CreditBalance />
+            </button>
+            <div className="relative">
             <button
               onClick={() => setShowMenu(!showMenu)}
               className="flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition-all active:scale-95"
