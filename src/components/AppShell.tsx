@@ -3,6 +3,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FileText, Image, FolderOpen, Sparkles, User, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import InstallBanner from "@/components/InstallBanner";
 import type { User as SupaUser } from "@supabase/supabase-js";
 
 const tabs = [
@@ -103,6 +104,8 @@ export default function AppShell() {
           })}
         </div>
       </nav>
+
+      <InstallBanner />
     </div>
   );
 }
