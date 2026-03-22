@@ -7,6 +7,7 @@ import AppShell from "@/components/AppShell";
 import ScriptGenerator from "@/pages/ScriptGenerator";
 import ThumbnailGenerator from "@/pages/ThumbnailGenerator";
 import Projects from "@/pages/Projects";
+import BuyCredits from "@/pages/BuyCredits";
 import Auth from "@/pages/Auth";
 import ResetPassword from "@/pages/ResetPassword";
 import NotFound from "@/pages/NotFound";
@@ -24,6 +25,7 @@ const App = () => (
             <Route path="/" element={<ScriptGenerator />} />
             <Route path="/thumbnails" element={<ThumbnailGenerator />} />
             <Route path="/projects" element={<Projects />} />
+            <Route path="/buy-credits" element={<BuyCredits />} />
           </Route>
           <Route path="/auth" element={<Auth />} />
           <Route path="/reset-password" element={<ResetPassword />} />

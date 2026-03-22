@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { FileText, Image, FolderOpen, Sparkles, User, LogOut } from "lucide-react";
+import { FileText, Image, FolderOpen, Sparkles, User, LogOut, Coins } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import InstallBanner from "@/components/InstallBanner";
+import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { CreditBalance } from "@/components/CreditBalance";
 import type { User as SupaUser } from "@supabase/supabase-js";
 
 const tabs = [
@@ -35,6 +37,7 @@ export default function AppShell() {
 
   return (
     <div className="flex min-h-[100dvh] flex-col bg-background">
+      <PaymentTestModeBanner />
       {/* Header */}
       <header className="sticky top-0 z-30 flex items-center justify-between border-b bg-background/80 px-4 py-3 backdrop-blur-md">
         <div className="flex items-center gap-2">
@@ -45,7 +48,14 @@ export default function AppShell() {
         </div>
 
         {user ? (
-          <div className="relative">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate("/buy-credits")}
+              className="transition-all active:scale-95"
+            >
+              <CreditBalance />
+            </button>
+            <div className="relative">
             <button
               onClick={() => setShowMenu(!showMenu)}
               className="flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition-all active:scale-95"
@@ -68,6 +78,7 @@ export default function AppShell() {
                 </div>
               </>
             )}
+            </div>
           </div>
         ) : (
           <button
