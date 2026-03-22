@@ -132,6 +132,7 @@ export default function Auth() {
           </button>
         </p>
       </div>
+      <Footer />
     </div>
   );
 }
