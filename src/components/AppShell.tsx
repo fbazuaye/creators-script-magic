@@ -46,7 +46,6 @@ export default function AppShell() {
         <div className="flex items-center gap-2">
           <img src={creatronLogo} alt="Creatron" className="h-8" />
         </div>
-        </div>
 
         {user ? (
           <div className="flex items-center gap-2">
