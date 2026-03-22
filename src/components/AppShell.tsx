@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import InstallBanner from "@/components/InstallBanner";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { CreditBalance } from "@/components/CreditBalance";
+import { useAdmin } from "@/hooks/useAdmin";
 import type { User as SupaUser } from "@supabase/supabase-js";
 
 const tabs = [
