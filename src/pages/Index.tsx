@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import creatronLogo from "@/assets/creatron-logo.svg";
+import Footer from "@/components/Footer";
 
 const platforms = [
   { icon: Youtube, label: "YouTube" },

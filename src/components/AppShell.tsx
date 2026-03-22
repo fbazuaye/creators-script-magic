@@ -5,6 +5,7 @@ import creatronLogo from "@/assets/creatron-logo.svg";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import InstallBanner from "@/components/InstallBanner";
+import Footer from "@/components/Footer";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { CreditBalance } from "@/components/CreditBalance";
 import { useAdmin } from "@/hooks/useAdmin";
