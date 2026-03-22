@@ -137,8 +137,9 @@ export default function ScriptGenerator() {
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-sm font-medium text-foreground">Topic</label>
+        <label htmlFor="topic" className="text-sm font-medium text-foreground">Topic</label>
         <textarea
+          id="topic"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
           placeholder="e.g. How to grow on YouTube in 2025"
