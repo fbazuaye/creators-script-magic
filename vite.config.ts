@@ -44,8 +44,8 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       manifest: {
-        name: "CreatorScript AI",
-        short_name: "CreatorScript",
+        name: "Creatron",
+        short_name: "Creatron",
         description: "AI-powered script & thumbnail tools for content creators",
         theme_color: "#E05A3A",
         background_color: "#F8F5F2",

@@ -16,6 +16,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import creatronLogo from "@/assets/creatron-logo.svg";
 
 const platforms = [
   { icon: Youtube, label: "YouTube" },
@@ -87,10 +88,7 @@ export default function Index() {
       <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-primary" />
-            <span className="text-base font-semibold tracking-tight">
-              CreatorScript <span className="font-normal text-muted-foreground">AI</span>
-            </span>
+            <img src={creatronLogo} alt="Creatron" className="h-8" />
           </div>
           <nav className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
             <button onClick={() => navigate("/create")} className="transition-colors hover:text-foreground">
@@ -278,7 +276,7 @@ export default function Index() {
             Ready to Create Content That Converts?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-muted-foreground text-sm md:text-base">
-            Join thousands of creators using CreatorScript AI to produce engaging content faster than ever.
+            Join thousands of creators using Creatron to produce engaging content faster than ever.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <button
@@ -300,7 +298,7 @@ export default function Index() {
 
       {/* ─── Footer ─── */}
       <footer className="border-t py-8 text-center text-xs text-muted-foreground space-y-1">
-        <p>© {new Date().getFullYear()} CreatorScript AI. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Creatron. All rights reserved.</p>
         <p>Designed by Frank Bazuaye · Powered By LiveGig Ltd</p>
       </footer>
     </div>

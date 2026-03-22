@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Sparkles, Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
+import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
+import creatronLogo from "@/assets/creatron-logo.svg";
 import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
@@ -56,12 +57,7 @@ export default function Auth() {
       <div className="w-full max-w-sm space-y-8 animate-fade-up">
         {/* Brand */}
         <div className="flex flex-col items-center gap-2">
-          <div className="rounded-2xl bg-primary/10 p-3">
-            <Sparkles className="h-7 w-7 text-primary" />
-          </div>
-          <h1 className="text-xl font-semibold tracking-tight text-foreground">
-            CreatorScript <span className="font-normal text-muted-foreground">AI</span>
-          </h1>
+          <img src={creatronLogo} alt="Creatron" className="h-12" />
           <p className="text-sm text-muted-foreground">
             {mode === "login" ? "Welcome back, creator" : "Start creating today"}
           </p>

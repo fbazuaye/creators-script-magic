@@ -57,7 +57,7 @@ export default function InstallBanner() {
           <Download className="h-5 w-5 text-primary" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-card-foreground">Install CreatorScript AI</p>
+          <p className="text-sm font-medium text-card-foreground">Install Creatron</p>
           <p className="text-xs text-muted-foreground truncate">
             {showIosBanner
               ? "Tap Share ⎋ then \"Add to Home Screen\""
