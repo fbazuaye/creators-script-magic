@@ -44,9 +44,9 @@ export default function AppShell() {
       <PaymentTestModeBanner />
       {/* Header */}
       <header className="sticky top-0 z-30 flex items-center justify-between border-b bg-background/80 px-4 py-3 backdrop-blur-md">
-        <div className="flex items-center gap-2">
+        <button onClick={() => navigate("/")} className="flex items-center gap-2 transition-all active:scale-95">
           <img src={creatronLogo} alt="Creatron" className="h-8" />
-        </div>
+        </button>
 
         {user ? (
           <div className="flex items-center gap-2">
