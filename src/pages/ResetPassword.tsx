@@ -39,11 +39,12 @@ export default function ResetPassword() {
 
   if (done) {
     return (
-      <div className="flex min-h-[100dvh] items-center justify-center bg-background px-5">
+      <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-5">
         <div className="flex flex-col items-center gap-3 animate-fade-up">
           <CheckCircle className="h-12 w-12 text-primary" />
           <p className="text-sm font-medium text-foreground">Password updated! Redirecting…</p>
         </div>
+        <div className="mt-auto w-full"><Footer /></div>
       </div>
     );
   }
