@@ -14,6 +14,8 @@ interface UserRow {
   email?: string;
 }
 
+type CreditInput = { userId: string; amount: string } | null;
+
 interface Transaction {
   id: string;
   user_id: string;
