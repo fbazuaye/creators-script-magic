@@ -225,6 +225,52 @@ export default function Index() {
         </div>
       </section>
 
+      {/* ─── Pricing ─── */}
+      <section className="mx-auto max-w-4xl px-5 py-16 md:py-24">
+        <FadeInOnScroll className="text-center mb-12">
+          <h2 className="text-2xl font-bold tracking-tight md:text-3xl" style={{ textWrap: "balance" } as React.CSSProperties}>
+            Simple, Pay-As-You-Go Pricing
+          </h2>
+          <p className="mt-3 text-muted-foreground text-sm md:text-base">
+            No subscriptions. Buy credits and use them whenever you want.
+          </p>
+        </FadeInOnScroll>
+
+        <div className="grid gap-5 sm:grid-cols-3">
+          {pricingPacks.map(({ credits, price, perCredit, popular }, i) => (
+            <FadeInOnScroll key={credits} delay={i * 100}>
+              <div
+                className={`relative rounded-2xl border p-6 text-center shadow-sm transition-shadow hover:shadow-md ${
+                  popular ? "border-primary bg-primary/[0.03] ring-1 ring-primary/20" : "bg-card"
+                }`}
+              >
+                {popular && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-0.5 text-[11px] font-semibold text-primary-foreground shadow-sm">
+                    Most Popular
+                  </span>
+                )}
+                <p className="text-3xl font-bold tracking-tight text-foreground" style={{ fontVariantNumeric: "tabular-nums" }}>
+                  {credits}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">credits</p>
+                <p className="mt-4 text-2xl font-bold text-foreground">{price}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{perCredit} per credit</p>
+                <button
+                  onClick={() => navigate(user ? "/buy-credits" : "/auth")}
+                  className={`mt-6 w-full rounded-full py-2.5 text-sm font-semibold transition-all active:scale-[0.97] ${
+                    popular
+                      ? "bg-primary text-primary-foreground shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30"
+                      : "border bg-card text-foreground hover:bg-secondary"
+                  }`}
+                >
+                  Buy Credits
+                </button>
+              </div>
+            </FadeInOnScroll>
+          ))}
+        </div>
+      </section>
+
       {/* ─── CTA ─── */}
       <section className="mx-auto max-w-3xl px-5 py-16 text-center md:py-24">
         <FadeInOnScroll>
