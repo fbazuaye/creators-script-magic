@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import AppShell from "@/components/AppShell";
+import Index from "@/pages/Index";
 import ScriptGenerator from "@/pages/ScriptGenerator";
 import ThumbnailGenerator from "@/pages/ThumbnailGenerator";
 import Projects from "@/pages/Projects";
@@ -21,8 +22,9 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Index />} />
           <Route element={<AppShell />}>
-            <Route path="/" element={<ScriptGenerator />} />
+            <Route path="/create" element={<ScriptGenerator />} />
             <Route path="/thumbnails" element={<ThumbnailGenerator />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/buy-credits" element={<BuyCredits />} />
