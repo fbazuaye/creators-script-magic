@@ -102,6 +102,7 @@ export default function AppShell() {
       {/* Content */}
       <main className="flex-1 overflow-y-auto px-4 py-4 pb-24">
         <Outlet />
+        <Footer />
       </main>
 
       {/* Bottom Navigation */}
