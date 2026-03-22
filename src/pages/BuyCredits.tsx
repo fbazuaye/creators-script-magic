@@ -10,7 +10,7 @@ const PACKS = [
   {
     id: "credits_10",
     credits: 10,
-    price: "$4.99",
+    price: "$0.70",
     icon: Coins,
     label: "Starter",
     description: "Try it out",
@@ -19,7 +19,7 @@ const PACKS = [
   {
     id: "credits_50",
     credits: 50,
-    price: "$19.99",
+    price: "$3.50",
     icon: Zap,
     label: "Creator",
     description: "Most popular",
@@ -29,7 +29,7 @@ const PACKS = [
   {
     id: "credits_100",
     credits: 100,
-    price: "$34.99",
+    price: "$7.00",
     icon: Crown,
     label: "Power",
     description: "Best value",
