@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
 import creatronLogo from "@/assets/creatron-logo.svg";
+import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
