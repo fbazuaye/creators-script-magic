@@ -20,6 +20,7 @@ export default function AppShell() {
   const navigate = useNavigate();
   const [user, setUser] = useState<SupaUser | null>(null);
   const [showMenu, setShowMenu] = useState(false);
+  const { isAdmin } = useAdmin();
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
