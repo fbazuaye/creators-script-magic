@@ -9,7 +9,7 @@ import { CreditBalance } from "@/components/CreditBalance";
 import type { User as SupaUser } from "@supabase/supabase-js";
 
 const tabs = [
-  { path: "/", icon: FileText, label: "Script" },
+  { path: "/create", icon: FileText, label: "Script" },
   { path: "/thumbnails", icon: Image, label: "Thumbnail" },
   { path: "/projects", icon: FolderOpen, label: "Projects" },
 ];
