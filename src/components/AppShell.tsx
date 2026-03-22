@@ -93,7 +93,7 @@ export default function AppShell() {
               <button
                 key={path}
                 onClick={() => navigate(path)}
-                className={`flex flex-1 flex-col items-center gap-0.5 py-2.5 text-xs transition-colors active:scale-95 ${
+                className={`flex flex-1 flex-col items-center justify-center gap-0.5 min-h-[48px] py-3 text-xs transition-colors active:scale-95 ${
                   active ? "text-primary" : "text-muted-foreground"
                 }`}
               >
