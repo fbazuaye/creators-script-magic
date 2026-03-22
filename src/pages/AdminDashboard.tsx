@@ -45,8 +45,7 @@ export default function AdminDashboard() {
   const [scripts, setScripts] = useState<Script[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
+  const [creditInput, setCreditInput] = useState<CreditInput>(null);
     if (adminLoading) return;
     if (!isAdmin) { navigate("/"); return; }
     fetchData();
