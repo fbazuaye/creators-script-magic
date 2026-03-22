@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { Sparkles, Copy, Check, ChevronDown } from "lucide-react";
+import { useState, useRef } from "react";
+import { Sparkles, Copy, Check, ChevronDown, Square } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const PLATFORMS = ["YouTube", "TikTok", "Instagram Reels", "Podcast", "Blog"];
 const TONES = ["Casual", "Professional", "Funny", "Educational", "Dramatic"];
@@ -12,30 +14,80 @@ export default function ScriptGenerator() {
   const [script, setScript] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
 
   const handleGenerate = async () => {
     if (!topic.trim()) return;
     setLoading(true);
     setScript("");
 
-    // Simulate AI generation (will connect to Lovable Cloud AI later)
-    await new Promise((r) => setTimeout(r, 1500));
+    abortRef.current = new AbortController();
 
-    setScript(
-      `🎬 ${platform} Script — "${topic}"\n\n` +
-        `[HOOK — 0:00]\nHey everyone! Today we're diving into ${topic}. ` +
-        `Trust me, you don't want to miss this.\n\n` +
-        `[INTRO — 0:15]\nSo here's the thing about ${topic}... ` +
-        `Most people get this completely wrong. Let me break it down for you.\n\n` +
-        `[MAIN CONTENT — 0:45]\nFirst, let's talk about why ${topic} matters right now. ` +
-        `The key insight is that content creators who understand this see 3x more engagement.\n\n` +
-        `Point 1: Start with your audience's biggest pain point.\n` +
-        `Point 2: Share a personal story or case study.\n` +
-        `Point 3: Give actionable takeaways they can use today.\n\n` +
-        `[CTA — ${duration}:00]\nIf this helped you, smash that like button and subscribe. ` +
-        `Drop a comment telling me what topic you want next!\n\n` +
-        `---\nTone: ${tone} | Duration: ~${duration} min | Platform: ${platform}`
-    );
+    try {
+      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-script`;
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({ topic, platform, tone, duration }),
+        signal: abortRef.current.signal,
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({ error: "Generation failed" }));
+        toast.error(err.error || "Something went wrong");
+        setLoading(false);
+        return;
+      }
+
+      if (!resp.body) throw new Error("No response body");
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let full = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        let newlineIdx: number;
+        while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+          let line = buffer.slice(0, newlineIdx);
+          buffer = buffer.slice(newlineIdx + 1);
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (!line.startsWith("data: ")) continue;
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") break;
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content;
+            if (content) {
+              full += content;
+              setScript(full);
+            }
+          } catch {
+            buffer = line + "\n" + buffer;
+            break;
+          }
+        }
+      }
+    } catch (e: any) {
+      if (e.name !== "AbortError") {
+        toast.error("Failed to generate script");
+        console.error(e);
+      }
+    } finally {
+      setLoading(false);
+      abortRef.current = null;
+    }
+  };
+
+  const handleStop = () => {
+    abortRef.current?.abort();
     setLoading(false);
   };
 
@@ -54,7 +106,6 @@ export default function ScriptGenerator() {
         </p>
       </div>
 
-      {/* Topic Input */}
       <div className="space-y-1.5">
         <label className="text-sm font-medium text-foreground">Topic</label>
         <textarea
@@ -66,7 +117,6 @@ export default function ScriptGenerator() {
         />
       </div>
 
-      {/* Options Row */}
       <div className="grid grid-cols-3 gap-3">
         <SelectField label="Platform" value={platform} options={PLATFORMS} onChange={setPlatform} />
         <SelectField label="Tone" value={tone} options={TONES} onChange={setTone} />
@@ -86,17 +136,25 @@ export default function ScriptGenerator() {
         </div>
       </div>
 
-      {/* Generate Button */}
-      <button
-        onClick={handleGenerate}
-        disabled={loading || !topic.trim()}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all active:scale-[0.97] disabled:opacity-50 disabled:shadow-none"
-      >
-        <Sparkles className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
-        {loading ? "Generating…" : "Generate Script"}
-      </button>
+      {loading ? (
+        <button
+          onClick={handleStop}
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-destructive bg-destructive/10 py-3.5 text-sm font-semibold text-destructive transition-all active:scale-[0.97]"
+        >
+          <Square className="h-4 w-4" />
+          Stop Generating
+        </button>
+      ) : (
+        <button
+          onClick={handleGenerate}
+          disabled={!topic.trim()}
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all active:scale-[0.97] disabled:opacity-50 disabled:shadow-none"
+        >
+          <Sparkles className="h-4 w-4" />
+          Generate Script
+        </button>
+      )}
 
-      {/* Output */}
       {script && (
         <div className="animate-fade-up space-y-3">
           <div className="flex items-center justify-between">
@@ -111,6 +169,7 @@ export default function ScriptGenerator() {
           </div>
           <div className="whitespace-pre-wrap rounded-xl border bg-card p-4 text-sm leading-relaxed text-card-foreground shadow-sm">
             {script}
+            {loading && <span className="inline-block w-1.5 h-4 ml-0.5 bg-primary animate-pulse rounded-sm" />}
           </div>
         </div>
       )}
